@@ -1,0 +1,43 @@
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /root/map2_navigation/build/map2_navigation
+-- Install configuration: ""
+-- Installing: /root/map2_navigation/install/map2_navigation/lib/map2_navigation/twist_to_ackermann.py
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/launch
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/launch/map2_navigation.launch.py
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/launch/__pycache__
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/launch/__pycache__/map2_navigation.launch.cpython-310.pyc
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/params
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/params/nav2_params.yaml
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/maps
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/maps/map_2.yaml
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/maps/map_2.png
+-- Installing: /root/map2_navigation/install/map2_navigation/share/ament_index/resource_index/package_run_dependencies/map2_navigation
+-- Installing: /root/map2_navigation/install/map2_navigation/share/ament_index/resource_index/parent_prefix_path/map2_navigation
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/environment/ament_prefix_path.sh
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/environment/ament_prefix_path.dsv
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/environment/path.sh
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/environment/path.dsv
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/local_setup.bash
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/local_setup.sh
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/local_setup.zsh
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/local_setup.dsv
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/package.dsv
+-- Installing: /root/map2_navigation/install/map2_navigation/share/ament_index/resource_index/packages/map2_navigation
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/cmake/map2_navigationConfig.cmake
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/cmake/map2_navigationConfig-version.cmake
+-- Installing: /root/map2_navigation/install/map2_navigation/share/map2_navigation/package.xml

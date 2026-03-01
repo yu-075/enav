@@ -1,0 +1,106 @@
+[0.131s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[0.132s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=128, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x7f06fe26fe20>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f06fe26f1c0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f06fe26f1c0>>, mixin_verb=('build',))
+[0.361s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.361s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.361s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.361s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.361s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.361s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.361s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/root/map2_navigation'
+[0.361s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.362s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.362s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.362s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.362s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.362s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.362s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.362s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.362s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.386s] DEBUG:colcon.colcon_core.package_identification:Package '.' with type 'ros.ament_cmake' and name 'map2_navigation'
+[0.386s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.386s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.386s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.386s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.386s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.407s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.407s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.411s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 14 installed packages in /root/IsaacSim-ros_workspaces/humble_ws/install
+[0.413s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 405 installed packages in /opt/ros/humble
+[0.415s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.485s] Level 5:colcon.colcon_core.verb:set package 'map2_navigation' build argument 'cmake_args' from command line to 'None'
+[0.485s] Level 5:colcon.colcon_core.verb:set package 'map2_navigation' build argument 'cmake_target' from command line to 'None'
+[0.485s] Level 5:colcon.colcon_core.verb:set package 'map2_navigation' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.485s] Level 5:colcon.colcon_core.verb:set package 'map2_navigation' build argument 'cmake_clean_cache' from command line to 'False'
+[0.485s] Level 5:colcon.colcon_core.verb:set package 'map2_navigation' build argument 'cmake_clean_first' from command line to 'False'
+[0.485s] Level 5:colcon.colcon_core.verb:set package 'map2_navigation' build argument 'cmake_force_configure' from command line to 'False'
+[0.485s] Level 5:colcon.colcon_core.verb:set package 'map2_navigation' build argument 'ament_cmake_args' from command line to 'None'
+[0.485s] Level 5:colcon.colcon_core.verb:set package 'map2_navigation' build argument 'catkin_cmake_args' from command line to 'None'
+[0.485s] Level 5:colcon.colcon_core.verb:set package 'map2_navigation' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.485s] DEBUG:colcon.colcon_core.verb:Building package 'map2_navigation' with the following arguments: {'ament_cmake_args': None, 'build_base': '/root/map2_navigation/build/map2_navigation', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/root/map2_navigation/install/map2_navigation', 'merge_install': False, 'path': '/root/map2_navigation', 'symlink_install': False, 'test_result_base': None}
+[0.486s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.487s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.487s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/root/map2_navigation' with build type 'ament_cmake'
+[0.487s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/root/map2_navigation'
+[0.489s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.490s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.490s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.502s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/root/map2_navigation/build/map2_navigation': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake /root/map2_navigation -DCMAKE_INSTALL_PREFIX=/root/map2_navigation/install/map2_navigation
+[1.266s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/root/map2_navigation/build/map2_navigation' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake /root/map2_navigation -DCMAKE_INSTALL_PREFIX=/root/map2_navigation/install/map2_navigation
+[1.268s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/root/map2_navigation/build/map2_navigation': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --build /root/map2_navigation/build/map2_navigation -- -j128 -l128
+[1.311s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/root/map2_navigation/build/map2_navigation' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --build /root/map2_navigation/build/map2_navigation -- -j128 -l128
+[1.323s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/root/map2_navigation/build/map2_navigation': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --install /root/map2_navigation/build/map2_navigation
+[1.346s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(map2_navigation)
+[1.346s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/root/map2_navigation/build/map2_navigation' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --install /root/map2_navigation/build/map2_navigation
+[1.349s] Level 1:colcon.colcon_core.environment:checking '/root/map2_navigation/install/map2_navigation' for CMake module files
+[1.350s] Level 1:colcon.colcon_core.environment:checking '/root/map2_navigation/install/map2_navigation' for CMake config files
+[1.350s] Level 1:colcon.colcon_core.shell:create_environment_hook('map2_navigation', 'cmake_prefix_path')
+[1.350s] INFO:colcon.colcon_core.shell:Creating environment hook '/root/map2_navigation/install/map2_navigation/share/map2_navigation/hook/cmake_prefix_path.ps1'
+[1.351s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/root/map2_navigation/install/map2_navigation/share/map2_navigation/hook/cmake_prefix_path.dsv'
+[1.352s] INFO:colcon.colcon_core.shell:Creating environment hook '/root/map2_navigation/install/map2_navigation/share/map2_navigation/hook/cmake_prefix_path.sh'
+[1.353s] Level 1:colcon.colcon_core.environment:checking '/root/map2_navigation/install/map2_navigation/lib'
+[1.353s] Level 1:colcon.colcon_core.environment:checking '/root/map2_navigation/install/map2_navigation/bin'
+[1.353s] Level 1:colcon.colcon_core.environment:checking '/root/map2_navigation/install/map2_navigation/lib/pkgconfig/map2_navigation.pc'
+[1.353s] Level 1:colcon.colcon_core.environment:checking '/root/map2_navigation/install/map2_navigation/lib/python3.10/site-packages'
+[1.354s] Level 1:colcon.colcon_core.environment:checking '/root/map2_navigation/install/map2_navigation/bin'
+[1.354s] INFO:colcon.colcon_core.shell:Creating package script '/root/map2_navigation/install/map2_navigation/share/map2_navigation/package.ps1'
+[1.355s] INFO:colcon.colcon_core.shell:Creating package descriptor '/root/map2_navigation/install/map2_navigation/share/map2_navigation/package.dsv'
+[1.356s] INFO:colcon.colcon_core.shell:Creating package script '/root/map2_navigation/install/map2_navigation/share/map2_navigation/package.sh'
+[1.356s] INFO:colcon.colcon_core.shell:Creating package script '/root/map2_navigation/install/map2_navigation/share/map2_navigation/package.bash'
+[1.357s] INFO:colcon.colcon_core.shell:Creating package script '/root/map2_navigation/install/map2_navigation/share/map2_navigation/package.zsh'
+[1.358s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/root/map2_navigation/install/map2_navigation/share/colcon-core/packages/map2_navigation)
+[1.359s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(map2_navigation)
+[1.359s] Level 1:colcon.colcon_core.environment:checking '/root/map2_navigation/install/map2_navigation' for CMake module files
+[1.360s] Level 1:colcon.colcon_core.environment:checking '/root/map2_navigation/install/map2_navigation' for CMake config files
+[1.360s] Level 1:colcon.colcon_core.shell:create_environment_hook('map2_navigation', 'cmake_prefix_path')
+[1.360s] INFO:colcon.colcon_core.shell:Creating environment hook '/root/map2_navigation/install/map2_navigation/share/map2_navigation/hook/cmake_prefix_path.ps1'
+[1.361s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/root/map2_navigation/install/map2_navigation/share/map2_navigation/hook/cmake_prefix_path.dsv'
+[1.361s] INFO:colcon.colcon_core.shell:Creating environment hook '/root/map2_navigation/install/map2_navigation/share/map2_navigation/hook/cmake_prefix_path.sh'
+[1.362s] Level 1:colcon.colcon_core.environment:checking '/root/map2_navigation/install/map2_navigation/lib'
+[1.362s] Level 1:colcon.colcon_core.environment:checking '/root/map2_navigation/install/map2_navigation/bin'
+[1.362s] Level 1:colcon.colcon_core.environment:checking '/root/map2_navigation/install/map2_navigation/lib/pkgconfig/map2_navigation.pc'
+[1.362s] Level 1:colcon.colcon_core.environment:checking '/root/map2_navigation/install/map2_navigation/lib/python3.10/site-packages'
+[1.362s] Level 1:colcon.colcon_core.environment:checking '/root/map2_navigation/install/map2_navigation/bin'
+[1.363s] INFO:colcon.colcon_core.shell:Creating package script '/root/map2_navigation/install/map2_navigation/share/map2_navigation/package.ps1'
+[1.363s] INFO:colcon.colcon_core.shell:Creating package descriptor '/root/map2_navigation/install/map2_navigation/share/map2_navigation/package.dsv'
+[1.364s] INFO:colcon.colcon_core.shell:Creating package script '/root/map2_navigation/install/map2_navigation/share/map2_navigation/package.sh'
+[1.365s] INFO:colcon.colcon_core.shell:Creating package script '/root/map2_navigation/install/map2_navigation/share/map2_navigation/package.bash'
+[1.365s] INFO:colcon.colcon_core.shell:Creating package script '/root/map2_navigation/install/map2_navigation/share/map2_navigation/package.zsh'
+[1.366s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/root/map2_navigation/install/map2_navigation/share/colcon-core/packages/map2_navigation)
+[1.366s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[1.366s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[1.366s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[1.367s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[1.373s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[1.373s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[1.373s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[1.383s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[1.384s] INFO:colcon.colcon_core.shell:Creating prefix script '/root/map2_navigation/install/local_setup.ps1'
+[1.385s] INFO:colcon.colcon_core.shell:Creating prefix util module '/root/map2_navigation/install/_local_setup_util_ps1.py'
+[1.386s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/root/map2_navigation/install/setup.ps1'
+[1.389s] INFO:colcon.colcon_core.shell:Creating prefix script '/root/map2_navigation/install/local_setup.sh'
+[1.390s] INFO:colcon.colcon_core.shell:Creating prefix util module '/root/map2_navigation/install/_local_setup_util_sh.py'
+[1.391s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/root/map2_navigation/install/setup.sh'
+[1.393s] INFO:colcon.colcon_core.shell:Creating prefix script '/root/map2_navigation/install/local_setup.bash'
+[1.394s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/root/map2_navigation/install/setup.bash'
+[1.396s] INFO:colcon.colcon_core.shell:Creating prefix script '/root/map2_navigation/install/local_setup.zsh'
+[1.397s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/root/map2_navigation/install/setup.zsh'
