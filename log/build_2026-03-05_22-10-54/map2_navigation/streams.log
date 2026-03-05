@@ -1,0 +1,30 @@
+[0.015s] Invoking command in '/root/enav/build/map2_navigation': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --build /root/enav/build/map2_navigation -- -j128 -l128
+[0.064s] Invoked command in '/root/enav/build/map2_navigation' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --build /root/enav/build/map2_navigation -- -j128 -l128
+[0.066s] Invoking command in '/root/enav/build/map2_navigation': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --install /root/enav/build/map2_navigation
+[0.074s] -- Install configuration: ""
+[0.074s] -- Up-to-date: /root/enav/install/map2_navigation/lib/map2_navigation/twist_to_ackermann.py
+[0.074s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/launch
+[0.074s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/launch/map2_navigation.launch.py
+[0.075s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/launch/__pycache__
+[0.075s] -- Installing: /root/enav/install/map2_navigation/share/map2_navigation/launch/__pycache__/map2_navigation.launch.cpython-310.pyc
+[0.075s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/params
+[0.076s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/params/nav2_params.yaml
+[0.076s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/maps
+[0.076s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/maps/map_2.yaml
+[0.076s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/maps/map_2.png
+[0.077s] -- Up-to-date: /root/enav/install/map2_navigation/share/ament_index/resource_index/package_run_dependencies/map2_navigation
+[0.077s] -- Up-to-date: /root/enav/install/map2_navigation/share/ament_index/resource_index/parent_prefix_path/map2_navigation
+[0.078s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/environment/ament_prefix_path.sh
+[0.078s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/environment/ament_prefix_path.dsv
+[0.078s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/environment/path.sh
+[0.078s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/environment/path.dsv
+[0.079s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/local_setup.bash
+[0.079s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/local_setup.sh
+[0.079s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/local_setup.zsh
+[0.080s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/local_setup.dsv
+[0.080s] -- Installing: /root/enav/install/map2_navigation/share/map2_navigation/package.dsv
+[0.080s] -- Up-to-date: /root/enav/install/map2_navigation/share/ament_index/resource_index/packages/map2_navigation
+[0.080s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/cmake/map2_navigationConfig.cmake
+[0.080s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/cmake/map2_navigationConfig-version.cmake
+[0.080s] -- Up-to-date: /root/enav/install/map2_navigation/share/map2_navigation/package.xml
+[0.102s] Invoked command in '/root/enav/build/map2_navigation' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --install /root/enav/build/map2_navigation

@@ -1,0 +1,29 @@
+-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+-- Added test 'flake8' to check Python code syntax and style conventions
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /root/enav/build/eci
+-- Install configuration: ""
+-- Installing: /root/enav/install/eci/lib/eci/eci_node.py
+-- Up-to-date: /root/enav/install/eci/lib/eci/eci_monitor.py
+-- Installing: /root/enav/install/eci/share/eci/config
+-- Installing: /root/enav/install/eci/share/eci/config/eci_params.yaml
+-- Up-to-date: /root/enav/install/eci/share/ament_index/resource_index/package_run_dependencies/eci
+-- Up-to-date: /root/enav/install/eci/share/ament_index/resource_index/parent_prefix_path/eci
+-- Up-to-date: /root/enav/install/eci/share/eci/environment/ament_prefix_path.sh
+-- Installing: /root/enav/install/eci/share/eci/environment/ament_prefix_path.dsv
+-- Up-to-date: /root/enav/install/eci/share/eci/environment/path.sh
+-- Installing: /root/enav/install/eci/share/eci/environment/path.dsv
+-- Up-to-date: /root/enav/install/eci/share/eci/local_setup.bash
+-- Up-to-date: /root/enav/install/eci/share/eci/local_setup.sh
+-- Up-to-date: /root/enav/install/eci/share/eci/local_setup.zsh
+-- Installing: /root/enav/install/eci/share/eci/local_setup.dsv
+-- Installing: /root/enav/install/eci/share/eci/package.dsv
+-- Up-to-date: /root/enav/install/eci/share/ament_index/resource_index/packages/eci
+-- Up-to-date: /root/enav/install/eci/share/eci/cmake/eciConfig.cmake
+-- Up-to-date: /root/enav/install/eci/share/eci/cmake/eciConfig-version.cmake
+-- Up-to-date: /root/enav/install/eci/share/eci/package.xml

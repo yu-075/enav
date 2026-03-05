@@ -1,0 +1,22 @@
+[0.022s] Invoking command in '/root/enav/build/eci': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --build /root/enav/build/eci -- -j128 -l128
+[0.065s] Invoked command in '/root/enav/build/eci' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --build /root/enav/build/eci -- -j128 -l128
+[0.077s] Invoking command in '/root/enav/build/eci': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --install /root/enav/build/eci
+[0.086s] -- Install configuration: ""
+[0.086s] -- Installing: /root/enav/install/eci/lib/eci/eci_node.py
+[0.087s] -- Up-to-date: /root/enav/install/eci/lib/eci/eci_monitor.py
+[0.087s] -- Up-to-date: /root/enav/install/eci/share/ament_index/resource_index/package_run_dependencies/eci
+[0.087s] -- Up-to-date: /root/enav/install/eci/share/ament_index/resource_index/parent_prefix_path/eci
+[0.087s] -- Up-to-date: /root/enav/install/eci/share/eci/environment/ament_prefix_path.sh
+[0.087s] -- Up-to-date: /root/enav/install/eci/share/eci/environment/ament_prefix_path.dsv
+[0.088s] -- Up-to-date: /root/enav/install/eci/share/eci/environment/path.sh
+[0.088s] -- Up-to-date: /root/enav/install/eci/share/eci/environment/path.dsv
+[0.088s] -- Up-to-date: /root/enav/install/eci/share/eci/local_setup.bash
+[0.088s] -- Up-to-date: /root/enav/install/eci/share/eci/local_setup.sh
+[0.088s] -- Up-to-date: /root/enav/install/eci/share/eci/local_setup.zsh
+[0.088s] -- Up-to-date: /root/enav/install/eci/share/eci/local_setup.dsv
+[0.088s] -- Installing: /root/enav/install/eci/share/eci/package.dsv
+[0.089s] -- Up-to-date: /root/enav/install/eci/share/ament_index/resource_index/packages/eci
+[0.089s] -- Up-to-date: /root/enav/install/eci/share/eci/cmake/eciConfig.cmake
+[0.089s] -- Up-to-date: /root/enav/install/eci/share/eci/cmake/eciConfig-version.cmake
+[0.089s] -- Up-to-date: /root/enav/install/eci/share/eci/package.xml
+[0.096s] Invoked command in '/root/enav/build/eci' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --install /root/enav/build/eci

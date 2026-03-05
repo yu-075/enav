@@ -1,0 +1,4 @@
+Invoking command in '/root/enav/build/eci': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --build /root/enav/build/eci -- -j128 -l128
+Invoked command in '/root/enav/build/eci' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --build /root/enav/build/eci -- -j128 -l128
+Invoking command in '/root/enav/build/eci': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --install /root/enav/build/eci
+Invoked command in '/root/enav/build/eci' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/root/IsaacSim-ros_workspaces/humble_ws/install/isaac_ros_navigation_goal:/opt/ros/humble /usr/bin/cmake --install /root/enav/build/eci
