@@ -1,4 +1,0 @@
-source;share/eci/local_setup.bash
-source;share/eci/local_setup.dsv
-source;share/eci/local_setup.sh
-source;share/eci/local_setup.zsh

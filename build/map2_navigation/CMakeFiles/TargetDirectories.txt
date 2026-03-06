@@ -1,9 +1,0 @@
-/root/enav/build/map2_navigation/CMakeFiles/uninstall.dir
-/root/enav/build/map2_navigation/CMakeFiles/map2_navigation_uninstall.dir
-/root/enav/build/map2_navigation/CMakeFiles/test.dir
-/root/enav/build/map2_navigation/CMakeFiles/edit_cache.dir
-/root/enav/build/map2_navigation/CMakeFiles/rebuild_cache.dir
-/root/enav/build/map2_navigation/CMakeFiles/list_install_components.dir
-/root/enav/build/map2_navigation/CMakeFiles/install.dir
-/root/enav/build/map2_navigation/CMakeFiles/install/local.dir
-/root/enav/build/map2_navigation/CMakeFiles/install/strip.dir
