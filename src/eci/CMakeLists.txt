@@ -7,6 +7,7 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(rclpy REQUIRED)
 
 install(PROGRAMS
   scripts/eci_node.py
@@ -16,6 +17,7 @@ install(PROGRAMS
 
 install(DIRECTORY
   config
+  launch
   DESTINATION share/${PROJECT_NAME}
 )
 

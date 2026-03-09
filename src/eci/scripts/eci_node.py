@@ -17,6 +17,7 @@ from typing import Optional
 import numpy as np
 import rclpy
 from geometry_msgs.msg import Point
+from nav_msgs.msg import Odometry
 from rclpy.node import Node
 from sensor_msgs.msg import PointCloud2
 from sensor_msgs_py import point_cloud2
@@ -41,12 +42,16 @@ class EciNode(Node):
         self.declare_parameter('voxel_size', 0.1)
         self.declare_parameter('max_points', 3000.0)
         self.declare_parameter('max_distance', 5.0)
+        self.declare_parameter('speed_topic', '/odom')
+        self.declare_parameter('prediction_time_sec', 2.0)
+        self.declare_parameter('zero_speed_distance', 3.0)
         self.declare_parameter('min_height', 0.05)
         self.declare_parameter('max_height', 1.0)
         self.declare_parameter('density_distance', 3.0)
         self.declare_parameter('density_half_fov_deg', 45.0)
         self.declare_parameter('width_half_fov_deg', 30.0)
         self.declare_parameter('no_cloud_reset_sec', 8.0)
+        self.declare_parameter('eci_publish_hz', 20.0)
         self.declare_parameter('enable_range_visualization', True)
         self.declare_parameter('range_marker_topic', '/eci_detection_range')
         self.declare_parameter('range_target_frame', '/Leatherback')
@@ -57,6 +62,9 @@ class EciNode(Node):
         self.voxel_size = float(self.get_parameter('voxel_size').value)
         self.max_points = float(self.get_parameter('max_points').value)
         self.max_distance = float(self.get_parameter('max_distance').value)
+        self.speed_topic = str(self.get_parameter('speed_topic').value)
+        self.prediction_time_sec = float(self.get_parameter('prediction_time_sec').value)
+        self.zero_speed_distance = float(self.get_parameter('zero_speed_distance').value)
         self.min_height = float(self.get_parameter('min_height').value)
         self.max_height = float(self.get_parameter('max_height').value)
         self.density_distance = float(self.get_parameter('density_distance').value)
@@ -67,6 +75,7 @@ class EciNode(Node):
             float(self.get_parameter('width_half_fov_deg').value)
         )
         self.no_cloud_reset_sec = float(self.get_parameter('no_cloud_reset_sec').value)
+        self.eci_publish_hz = float(self.get_parameter('eci_publish_hz').value)
         self.enable_range_visualization = bool(
             self.get_parameter('enable_range_visualization').value
         )
@@ -78,11 +87,14 @@ class EciNode(Node):
         self.latest_density = 0.0
         self.latest_width_metric = 0.0
         self.last_cloud_stamp = None
-        self.visualization_source_frame = 'base_link'
+        self.visualization_source_frame = 'odom'
+        self.current_speed = 0.0
+        self.current_detection_distance = max(self.zero_speed_distance, 0.0)
 
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
         self.last_tf_warn_ns = 0
+        self.last_height_filter_warn_ns = 0
 
         # 点云到来时执行计算。
         self.subscription = self.create_subscription(
@@ -91,26 +103,50 @@ class EciNode(Node):
             self.pointcloud_callback,
             10,
         )
-        # 结果发布器与 5Hz 定时器（0.2s）。
+        self.odom_subscription = self.create_subscription(
+            Odometry,
+            self.speed_topic,
+            self.odom_callback,
+            10,
+        )
+        # 结果发布器与定时器。
         self.publisher = self.create_publisher(Float32, self.output_topic, 10)
         self.range_marker_publisher = self.create_publisher(
             MarkerArray,
             self.range_marker_topic,
             10,
         )
-        self.timer = self.create_timer(0.2, self.publish_eci)
+        publish_period_sec = 1.0 / max(self.eci_publish_hz, 1.0)
+        self.timer = self.create_timer(publish_period_sec, self.publish_eci)
 
         self.get_logger().info(
             f'eci_node started: subscribe={self.input_topic}, publish={self.output_topic}, '
             f'voxel_size={self.voxel_size}, max_points={self.max_points}, max_distance={self.max_distance}, '
+            f'speed_topic={self.speed_topic}, prediction_time_sec={self.prediction_time_sec}, '
+            f'zero_speed_distance={self.zero_speed_distance}, '
             f'min_height={self.min_height}, max_height={self.max_height}, '
             f'density_distance={self.density_distance}, '
             f'density_half_fov_deg={math.degrees(self.density_half_fov)}, '
             f'width_half_fov_deg={math.degrees(self.width_half_fov)}, '
             f'no_cloud_reset_sec={self.no_cloud_reset_sec}, '
+            f'eci_publish_hz={self.eci_publish_hz}, '
             f'enable_range_visualization={self.enable_range_visualization}, '
             f'range_marker_topic={self.range_marker_topic}, '
             f'range_target_frame={self.range_target_frame}'
+        )
+
+    def odom_callback(self, msg: Odometry) -> None:
+        """里程计回调：更新当前速度与动态检测距离。"""
+        vx = float(msg.twist.twist.linear.x)
+        vy = float(msg.twist.twist.linear.y)
+        self.current_speed = float(math.hypot(vx, vy))
+
+        # 检测距离 = max(静止基线距离, 当前车速在 prediction_time_sec 内的位移)。
+        self.current_detection_distance = float(
+            max(
+                max(self.zero_speed_distance, 0.0),
+                self.current_speed * max(self.prediction_time_sec, 0.0),
+            )
         )
 
     def pointcloud_callback(self, msg: PointCloud2) -> None:
@@ -128,13 +164,13 @@ class EciNode(Node):
 
         # 1) 体素降采样，2) 规则过滤。
         downsampled = self.voxel_downsample(points, self.voxel_size)
-        filtered = self.apply_filters(downsampled)
+        filtered = self.apply_filters(downsampled, self.current_detection_distance)
 
         # 密度：按“前方 3m 且 ±45°”内的点数量归一化。
         density = self.compute_density_metric(filtered)
 
-        # 宽度：按原有方法（最长连续空闲角段反比）计算。
-        width_metric = self.compute_width_metric(filtered)
+        # 宽度：按（最长连续空闲角段反比）计算。
+        width_metric = self.compute_width_metric(filtered, self.current_detection_distance)
 
         # ECI 加权融合。
         eci = float(np.clip(0.6 * density + 0.4 * width_metric, 0.0, 1.0))
@@ -159,10 +195,12 @@ class EciNode(Node):
             self.latest_density = 0.0
             self.latest_width_metric = 0.0
             self.latest_eci = 0.0
-
+        
         msg.data = float(self.latest_eci)
         self.publisher.publish(msg)
         self.publish_detection_range_markers()
+        self.get_logger().info(
+            f'eci: {msg.data} ')
 
     def publish_detection_range_markers(self) -> None:
         """发布 RViz 检测范围可视化。"""
@@ -186,7 +224,7 @@ class EciNode(Node):
         marker_array.markers.append(
             self.make_sector_marker(
                 marker_id=1,
-                radius=self.max_distance,
+                radius=self.current_detection_distance,
                 half_fov=self.width_half_fov,
                 color_rgba=(0.2, 0.9, 1.0, 0.9),
                 source_frame=source_frame,
@@ -212,13 +250,16 @@ class EciNode(Node):
         marker.id = marker_id
         marker.type = Marker.LINE_STRIP
         marker.action = Marker.ADD
+        marker.pose.position.z = 0.05
         marker.pose.orientation.w = 1.0
-        marker.scale.x = 0.05
+        marker.scale.x = 0.1
         marker.color.r = float(color_rgba[0])
         marker.color.g = float(color_rgba[1])
         marker.color.b = float(color_rgba[2])
         marker.color.a = float(color_rgba[3])
-        marker.lifetime.nanosec = int(300 * 1e6)
+        marker.lifetime.sec = 0
+        marker.lifetime.nanosec = 0
+        marker.frame_locked = True
 
         point_count = 60
         angles = np.linspace(-half_fov, half_fov, point_count)
@@ -367,7 +408,7 @@ class EciNode(Node):
         unique_indices = np.sort(unique_indices)
         return points[unique_indices]
 
-    def apply_filters(self, points: np.ndarray) -> np.ndarray:
+    def apply_filters(self, points: np.ndarray, detection_distance: float) -> np.ndarray:
         """按规则过滤点云：高度、前向角、距离。"""
         if points.size == 0:
             return points
@@ -383,12 +424,16 @@ class EciNode(Node):
         y = p[:, 1]
         angles = np.arctan2(y, x)
         distances = np.linalg.norm(p[:, :2], axis=1)
+        max_distance = max(float(detection_distance), 0.0)
 
-        # 前向区域过滤：-90° < atan2(y, x) < 90°，且距离 < max_distance。
+        if max_distance == 0.0:
+            return np.empty((0, 3), dtype=np.float32)
+
+        # 前向区域过滤：-90° < atan2(y, x) < 90°，且距离 < 动态检测距离。
         front_mask = (
             (angles > -math.pi / 2.0)
             & (angles < math.pi / 2.0)
-            & (distances < self.max_distance)
+            & (distances < max_distance)
         )
         p = p[front_mask]
 
@@ -396,7 +441,7 @@ class EciNode(Node):
             return np.empty((0, 3), dtype=np.float32)
         return p.astype(np.float32, copy=False)
 
-    def compute_width_metric(self, points: np.ndarray) -> float:
+    def compute_width_metric(self, points: np.ndarray, detection_distance: float) -> float:
         """计算简单“自由空间宽度”指标。
 
         方法：
@@ -414,17 +459,21 @@ class EciNode(Node):
         y = points[:, 1]
         angles = np.arctan2(y, x)
         distances = np.linalg.norm(points[:, :2], axis=1)
+        max_distance = max(float(detection_distance), 0.0)
+
+        if max_distance == 0.0:
+            return 0.0
 
         sector_limit = self.width_half_fov
         sector_mask = (
             (angles >= -sector_limit)
             & (angles <= sector_limit)
-            & (distances < self.max_distance)
+            & (distances < max_distance)
         )
         sector_angles = angles[sector_mask]
 
         # 角向离散精度：bin 越多，角向分辨率越细。
-        bin_count = 60
+        bin_count = 90
         if sector_angles.size == 0:
             # 扇区内无障碍，占用度最低。
             return 0.0

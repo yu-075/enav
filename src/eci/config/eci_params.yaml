@@ -3,7 +3,7 @@ eci_node:
     input_topic: /sim/point_cloud
     output_topic: /eci_value
 
-    voxel_size: 0.1
+    voxel_size: 0.01
     max_points: 3000.0
     max_distance: 5.0
 
@@ -15,6 +15,7 @@ eci_node:
     width_half_fov_deg: 30.0
 
     no_cloud_reset_sec: 8.0
+    eci_publish_hz: 20.0
 
     enable_range_visualization: true
     range_marker_topic: /eci_detection_range
