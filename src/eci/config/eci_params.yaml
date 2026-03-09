@@ -16,6 +16,8 @@ eci_node:
 
     no_cloud_reset_sec: 8.0
     eci_publish_hz: 20.0
+    eci_smoothing_alpha: 0.6
+    eci_zero_epsilon: -0.000001
 
     enable_range_visualization: true
     range_marker_topic: /eci_detection_range

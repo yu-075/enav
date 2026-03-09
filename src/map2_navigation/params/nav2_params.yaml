@@ -42,6 +42,7 @@ amcl:
 bt_navigator:
   ros__parameters:
     use_sim_time: True
+    default_nav_to_pose_bt_xml: "/root/enav/src/map2_navigation/behavior_trees/navigate_to_pose_ackermann_recovery.xml"
     global_frame: map
     robot_base_frame: Leatherback
     odom_topic: odom
@@ -119,8 +120,8 @@ controller_server:
 
     progress_checker:
       plugin: "nav2_controller::SimpleProgressChecker"
-      required_movement_radius: 0.05
-      movement_time_allowance: 20.0
+      required_movement_radius: 0.25
+      movement_time_allowance: 2.5
 
     general_goal_checker:
       stateful: True
@@ -129,44 +130,27 @@ controller_server:
       yaw_goal_tolerance: 0.25
 
     FollowPath:
-      plugin: "dwb_core::DWBLocalPlanner"
-      debug_trajectory_details: True
-      min_vel_x: 0.0
-      min_vel_y: 0.0
-      max_vel_x: 0.90
-      max_vel_y: 0.0
-      max_vel_theta: 1.0
-      min_speed_xy: 0.0
-      max_speed_xy: 0.90
-      min_speed_theta: 0.0
-      acc_lim_x: 3.5
-      acc_lim_y: 0.0
-      acc_lim_theta: 3.2
-      decel_lim_x: -3.5
-      decel_lim_y: 0.0
-      decel_lim_theta: -3.2
-      vx_samples: 20
-      vy_samples: 5
-      vtheta_samples: 20
-      sim_time: 1.7
-      linear_granularity: 0.05
-      angular_granularity: 0.025
+      plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
+      desired_linear_vel: 1.00
+      min_approach_linear_velocity: 0.08
+      approach_velocity_scaling_dist: 0.80
+      use_velocity_scaled_lookahead_dist: true
+      lookahead_time: 1.2
+      min_lookahead_dist: 0.45
+      max_lookahead_dist: 1.40
+      use_regulated_linear_velocity_scaling: true
+      use_cost_regulated_linear_velocity_scaling: true
+      regulated_linear_scaling_min_radius: 0.42
+      regulated_linear_scaling_min_speed: 0.10
+      use_fixed_curvature_lookahead: false
+      use_rotate_to_heading: true
+      rotate_to_heading_angular_vel: 5.0
+      max_angular_accel: 3.5
+      allow_reversing: false
       transform_tolerance: 0.2
       xy_goal_tolerance: 0.25
-      trans_stopped_velocity: 0.05
-      short_circuit_trajectory_evaluation: True
-      stateful: True
-      critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
-      BaseObstacle.scale: 0.02
-      PathAlign.scale: 32.0
-      PathAlign.forward_point_distance: 0.1
-      GoalAlign.scale: 24.0
-      GoalAlign.forward_point_distance: 0.1
-      PathDist.scale: 32.0
-      GoalDist.scale: 24.0
-      RotateToGoal.scale: 32.0
-      RotateToGoal.slowing_factor: 5.0
-      RotateToGoal.lookahead_time: -1.0
+      use_collision_detection: true
+      max_allowed_time_to_collision_up_to_carrot: 0.6
 
 local_costmap:
   local_costmap:
@@ -184,15 +168,15 @@ local_costmap:
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
-        inflation_radius: 0.55
+        cost_scaling_factor: 7.0
+        inflation_radius: 0.35
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
         publish_voxel_map: True
-        origin_z: -0.2
+        origin_z: -0.35
         z_resolution: 0.05
-        z_voxels: 16
+        z_voxels: 20
         max_obstacle_height: 2.0
         mark_threshold: 0
         observation_sources: scan
@@ -242,8 +226,8 @@ global_costmap:
         map_subscribe_transient_local: True
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
-        inflation_radius: 0.55
+        cost_scaling_factor: 7.0
+        inflation_radius: 0.35
       always_send_full_costmap: True
 
 map_server:
@@ -326,8 +310,8 @@ velocity_smoother:
     smoothing_frequency: 20.0
     scale_velocities: False
     feedback: "OPEN_LOOP"
-    max_velocity: [0.90, 0.0, 1.0]
-    min_velocity: [-0.90, 0.0, -1.0]
+    max_velocity: [1.10, 0.0, 1.0]
+    min_velocity: [-0.35, 0.0, -1.0]
     max_accel: [3.5, 0.0, 3.2]
     max_decel: [-3.5, 0.0, -3.2]
     odom_topic: "odom"
@@ -342,7 +326,8 @@ twist_to_ackermann:
     wheelbase: 0.17
     max_steering_angle: 0.60
     # If Nav2 requests pure rotation (v≈0, ω!=0), approximate with a small speed.
-    min_speed: 0.05
-    min_speed_for_steering: 0.01
+    min_speed: 0.08
+    reverse_min_speed: 0.12
+    min_speed_for_steering: 0.03
     # Match your robot base frame (nav2 uses Leatherback in this repo)
     frame_id: "Leatherback"

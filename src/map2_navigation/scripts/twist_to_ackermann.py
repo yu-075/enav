@@ -14,8 +14,9 @@ class TwistToAckermann(Node):
 
         self.declare_parameter("wheelbase", 0.17)
         self.declare_parameter("max_steering_angle", 0.60)
-        self.declare_parameter("min_speed", 0.05)
-        self.declare_parameter("min_speed_for_steering", 0.01)
+        self.declare_parameter("min_speed", 0.08)
+        self.declare_parameter("reverse_min_speed", 0.12)
+        self.declare_parameter("min_speed_for_steering", 0.03)
         self.declare_parameter("frame_id", "base_link")
 
         self._wheelbase = float(self.get_parameter("wheelbase").value)
@@ -23,6 +24,7 @@ class TwistToAckermann(Node):
             self.get_parameter("max_steering_angle").value
         )
         self._min_speed = float(self.get_parameter("min_speed").value)
+        self._reverse_min_speed = float(self.get_parameter("reverse_min_speed").value)
         self._min_speed_for_steering = float(
             self.get_parameter("min_speed_for_steering").value
         )
@@ -38,7 +40,8 @@ class TwistToAckermann(Node):
         # Ackermann cannot do true in-place rotation. If v is ~0 but omega != 0,
         # approximate by commanding a small speed with max steering.
         if abs(v) < self._min_speed_for_steering and abs(omega) > 1e-6:
-            v = math.copysign(self._min_speed, omega)
+            # Keep heading correction in forward gear to avoid unintended long reverse motion.
+            v = self._min_speed
             steering_angle = math.copysign(self._max_steering_angle, omega)
         elif abs(v) < 1e-6:
             v = 0.0
@@ -48,6 +51,11 @@ class TwistToAckermann(Node):
             steering_angle = max(
                 -self._max_steering_angle, min(self._max_steering_angle, steering_angle)
             )
+
+        # Recovery behaviors may output very small negative speeds that cannot move the car.
+        # Enforce a minimum reverse speed magnitude for reliable backup escape.
+        if v < -1e-6 and abs(v) < self._reverse_min_speed:
+            v = -self._reverse_min_speed
 
         out = AckermannDriveStamped()
         out.header.stamp = self.get_clock().now().to_msg()

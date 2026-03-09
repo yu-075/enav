@@ -52,6 +52,8 @@ class EciNode(Node):
         self.declare_parameter('width_half_fov_deg', 30.0)
         self.declare_parameter('no_cloud_reset_sec', 8.0)
         self.declare_parameter('eci_publish_hz', 20.0)
+        self.declare_parameter('eci_smoothing_alpha', 0.6)
+        self.declare_parameter('eci_zero_epsilon', 1e-6)
         self.declare_parameter('enable_range_visualization', True)
         self.declare_parameter('range_marker_topic', '/eci_detection_range')
         self.declare_parameter('range_target_frame', '/Leatherback')
@@ -76,6 +78,10 @@ class EciNode(Node):
         )
         self.no_cloud_reset_sec = float(self.get_parameter('no_cloud_reset_sec').value)
         self.eci_publish_hz = float(self.get_parameter('eci_publish_hz').value)
+        self.eci_smoothing_alpha = float(self.get_parameter('eci_smoothing_alpha').value)
+        self.eci_smoothing_alpha = float(np.clip(self.eci_smoothing_alpha, 0.0, 1.0))
+        self.eci_zero_epsilon = float(self.get_parameter('eci_zero_epsilon').value)
+        self.eci_zero_epsilon = max(self.eci_zero_epsilon, 0.0)
         self.enable_range_visualization = bool(
             self.get_parameter('enable_range_visualization').value
         )
@@ -84,6 +90,7 @@ class EciNode(Node):
 
         # 最新计算结果缓存；由回调更新，由定时器发布。
         self.latest_eci = 0.0
+        self.has_eci_history = False
         self.latest_density = 0.0
         self.latest_width_metric = 0.0
         self.last_cloud_stamp = None
@@ -130,6 +137,8 @@ class EciNode(Node):
             f'width_half_fov_deg={math.degrees(self.width_half_fov)}, '
             f'no_cloud_reset_sec={self.no_cloud_reset_sec}, '
             f'eci_publish_hz={self.eci_publish_hz}, '
+            f'eci_smoothing_alpha={self.eci_smoothing_alpha}, '
+            f'eci_zero_epsilon={self.eci_zero_epsilon}, '
             f'enable_range_visualization={self.enable_range_visualization}, '
             f'range_marker_topic={self.range_marker_topic}, '
             f'range_target_frame={self.range_target_frame}'
@@ -157,7 +166,7 @@ class EciNode(Node):
         points = self.pointcloud2_to_xyz(msg)
         if points.size == 0:
             # 无点云时输出 0，避免发布陈旧值。
-            self.latest_eci = 0.0
+            self.update_smoothed_eci(0.0)
             self.latest_density = 0.0
             self.latest_width_metric = 0.0
             return
@@ -177,7 +186,22 @@ class EciNode(Node):
 
         self.latest_density = density
         self.latest_width_metric = width_metric
-        self.latest_eci = eci
+        self.update_smoothed_eci(eci)
+
+    def update_smoothed_eci(self, current_eci: float) -> None:
+        """按指数滑动平均更新 ECI，降低帧间抖动。"""
+        if not self.has_eci_history:
+            self.latest_eci = float(np.clip(current_eci, 0.0, 1.0))
+            self.has_eci_history = True
+            return
+
+        alpha = self.eci_smoothing_alpha
+        smoothed = alpha * float(current_eci) + (1.0 - alpha) * float(self.latest_eci)
+        self.latest_eci = float(np.clip(smoothed, 0.0, 1.0))
+
+        # 抑制指数平滑的数值拖尾，避免长期输出 1e-12 这类非物理微小值。
+        if abs(self.latest_eci) < self.eci_zero_epsilon:
+            self.latest_eci = 0.0
 
     def publish_eci(self) -> None:
         """定时发布最新 ECI。"""
@@ -195,6 +219,7 @@ class EciNode(Node):
             self.latest_density = 0.0
             self.latest_width_metric = 0.0
             self.latest_eci = 0.0
+            self.has_eci_history = False
         
         msg.data = float(self.latest_eci)
         self.publisher.publish(msg)
@@ -357,20 +382,28 @@ class EciNode(Node):
         )
 
     def compute_density_metric(self, points: np.ndarray) -> float:
-        """计算前方 3m 且 ±45°内障碍点密度，输出范围 [0, 1]。"""
+        """计算前方扇区内带二次距离衰减的障碍密度，输出范围 [0, 1]。"""
         if points.size == 0:
             return 0.0
 
         angles = np.arctan2(points[:, 1], points[:, 0])
         distances = np.linalg.norm(points[:, :2], axis=1)
+        detection_distance = max(self.density_distance, 1e-6)
 
         density_mask = (
             (angles >= -self.density_half_fov)
             & (angles <= self.density_half_fov)
-            & (distances < self.density_distance)
+            & (distances < detection_distance)
         )
-        density_points = float(np.count_nonzero(density_mask))
-        density = float(np.clip(density_points / max(self.max_points, 1.0), 0.0, 1.0))
+
+        if not np.any(density_mask):
+            return 0.0
+
+        # 单点权重：((检测距离 - 点距) / 检测距离)^2，近点贡献更高。
+        masked_distances = distances[density_mask]
+        point_weights = np.square((detection_distance - masked_distances) / detection_distance)
+        weighted_density = float(np.sum(point_weights))
+        density = float(np.clip(weighted_density / max(self.max_points, 1.0), 0.0, 1.0))
         return density
 
     @staticmethod
