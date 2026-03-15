@@ -22,14 +22,14 @@
         <GoalUpdated/>
         <RoundRobin name="RecoveryActions">
           <Sequence name="BackUpAndPause">
-            <BackUp backup_dist="0.60" backup_speed="0.14"/>
-            <Wait wait_duration="1.5"/>
+            <BackUp backup_dist="0.80" backup_speed="0.22"/>
+            <Wait wait_duration="0.5"/>
           </Sequence>
           <Sequence name="ClearingActions">
             <ClearEntireCostmap name="ClearLocalCostmap-Subtree" service_name="local_costmap/clear_entirely_local_costmap"/>
             <ClearEntireCostmap name="ClearGlobalCostmap-Subtree" service_name="global_costmap/clear_entirely_global_costmap"/>
           </Sequence>
-          <Wait wait_duration="2"/>
+          <Wait wait_duration="1.0"/>
           <Spin spin_dist="1.57"/>
         </RoundRobin>
       </ReactiveFallback>

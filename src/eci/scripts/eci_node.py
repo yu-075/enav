@@ -79,9 +79,7 @@ class EciNode(Node):
         self.no_cloud_reset_sec = float(self.get_parameter('no_cloud_reset_sec').value)
         self.eci_publish_hz = float(self.get_parameter('eci_publish_hz').value)
         self.eci_smoothing_alpha = float(self.get_parameter('eci_smoothing_alpha').value)
-        self.eci_smoothing_alpha = float(np.clip(self.eci_smoothing_alpha, 0.0, 1.0))
         self.eci_zero_epsilon = float(self.get_parameter('eci_zero_epsilon').value)
-        self.eci_zero_epsilon = max(self.eci_zero_epsilon, 0.0)
         self.enable_range_visualization = bool(
             self.get_parameter('enable_range_visualization').value
         )

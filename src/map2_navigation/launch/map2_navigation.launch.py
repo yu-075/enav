@@ -17,6 +17,8 @@ def generate_launch_description():
     default_target_frame = "Leatherback"
     default_nav2_cmd_vel_topic = "/cmd_vel_nav"
     default_ackermann_cmd_topic = "/ackermann_cmd"
+    default_scan_min_height = "0.05"
+    default_scan_max_height = "0.80"
     default_map_yaml = os.path.join(
         get_package_share_directory("map2_navigation"), "maps", "map_2.yaml"
     )
@@ -34,6 +36,8 @@ def generate_launch_description():
     target_frame = LaunchConfiguration("target_frame")
     nav2_cmd_vel_topic = LaunchConfiguration("nav2_cmd_vel_topic")
     ackermann_cmd_topic = LaunchConfiguration("ackermann_cmd_topic")
+    scan_min_height = LaunchConfiguration("scan_min_height")
+    scan_max_height = LaunchConfiguration("scan_max_height")
     wheelbase = LaunchConfiguration("wheelbase")
     max_steering_angle = LaunchConfiguration("max_steering_angle")
     map_yaml = LaunchConfiguration("map")
@@ -97,8 +101,18 @@ def generate_launch_description():
                 description="Ackermann command output topic for the vehicle",
             ),
             DeclareLaunchArgument(
+                "scan_min_height",
+                default_value=default_scan_min_height,
+                description="Minimum Z (m) kept when projecting pointcloud to LaserScan",
+            ),
+            DeclareLaunchArgument(
+                "scan_max_height",
+                default_value=default_scan_max_height,
+                description="Maximum Z (m) kept when projecting pointcloud to LaserScan",
+            ),
+            DeclareLaunchArgument(
                 "wheelbase",
-                default_value="0.17",
+                default_value="0.32",
                 description="Vehicle wheelbase in meters (used for Twist->Ackermann)",
             ),
             DeclareLaunchArgument(
@@ -164,8 +178,8 @@ def generate_launch_description():
                         "use_sim_time": use_sim_time,
                         "target_frame": target_frame,
                         "transform_tolerance": 0.01,
-                        "min_height": -0.2,
-                        "max_height": 1.5,
+                        "min_height": scan_min_height,
+                        "max_height": scan_max_height,
                         "angle_min": -3.14159,
                         "angle_max": 3.14159,
                         "angle_increment": 0.0087,

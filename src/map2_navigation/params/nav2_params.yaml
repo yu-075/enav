@@ -120,8 +120,8 @@ controller_server:
 
     progress_checker:
       plugin: "nav2_controller::SimpleProgressChecker"
-      required_movement_radius: 0.25
-      movement_time_allowance: 2.5
+      required_movement_radius: 0.12
+      movement_time_allowance: 1.2
 
     general_goal_checker:
       stateful: True
@@ -131,21 +131,21 @@ controller_server:
 
     FollowPath:
       plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
-      desired_linear_vel: 1.00
-      min_approach_linear_velocity: 0.08
-      approach_velocity_scaling_dist: 0.80
+      desired_linear_vel: 0.60
+      min_approach_linear_velocity: 0.10
+      approach_velocity_scaling_dist: 0.90
       use_velocity_scaled_lookahead_dist: true
-      lookahead_time: 1.2
-      min_lookahead_dist: 0.45
-      max_lookahead_dist: 1.40
+      lookahead_time: 0.75
+      min_lookahead_dist: 0.28
+      max_lookahead_dist: 0.90
       use_regulated_linear_velocity_scaling: true
       use_cost_regulated_linear_velocity_scaling: true
-      regulated_linear_scaling_min_radius: 0.42
-      regulated_linear_scaling_min_speed: 0.10
+      regulated_linear_scaling_min_radius: 0.85
+      regulated_linear_scaling_min_speed: 0.12
       use_fixed_curvature_lookahead: false
-      use_rotate_to_heading: true
-      rotate_to_heading_angular_vel: 5.0
-      max_angular_accel: 3.5
+      use_rotate_to_heading: false
+      rotate_to_heading_angular_vel: 3.0
+      max_angular_accel: 2.5
       allow_reversing: false
       transform_tolerance: 0.2
       xy_goal_tolerance: 0.25
@@ -168,8 +168,8 @@ local_costmap:
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 7.0
-        inflation_radius: 0.35
+        cost_scaling_factor: 5.0
+        inflation_radius: 0.45
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
@@ -187,9 +187,9 @@ local_costmap:
           marking: True
           data_type: "LaserScan"
           raytrace_max_range: 3.0
-          raytrace_min_range: 0.0
+          raytrace_min_range: 0.12
           obstacle_max_range: 2.5
-          obstacle_min_range: 0.0
+          obstacle_min_range: 0.12
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
@@ -218,16 +218,16 @@ global_costmap:
           marking: True
           data_type: "LaserScan"
           raytrace_max_range: 3.0
-          raytrace_min_range: 0.0
+          raytrace_min_range: 0.12
           obstacle_max_range: 2.5
-          obstacle_min_range: 0.0
+          obstacle_min_range: 0.12
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 7.0
-        inflation_radius: 0.35
+        cost_scaling_factor: 5.0
+        inflation_radius: 0.45
       always_send_full_costmap: True
 
 map_server:
@@ -310,10 +310,10 @@ velocity_smoother:
     smoothing_frequency: 20.0
     scale_velocities: False
     feedback: "OPEN_LOOP"
-    max_velocity: [1.10, 0.0, 1.0]
+    max_velocity: [0.75, 0.0, 0.9]
     min_velocity: [-0.35, 0.0, -1.0]
-    max_accel: [3.5, 0.0, 3.2]
-    max_decel: [-3.5, 0.0, -3.2]
+    max_accel: [2.0, 0.0, 2.5]
+    max_decel: [-2.5, 0.0, -2.8]
     odom_topic: "odom"
     odom_duration: 0.1
     deadband_velocity: [0.0, 0.0, 0.0]
@@ -323,11 +323,11 @@ twist_to_ackermann:
   ros__parameters:
     use_sim_time: True
     # Ackermann kinematics parameters
-    wheelbase: 0.17
+    wheelbase: 0.32
     max_steering_angle: 0.60
     # If Nav2 requests pure rotation (v≈0, ω!=0), approximate with a small speed.
     min_speed: 0.08
-    reverse_min_speed: 0.12
+    reverse_min_speed: 0.18
     min_speed_for_steering: 0.03
     # Match your robot base frame (nav2 uses Leatherback in this repo)
     frame_id: "Leatherback"
